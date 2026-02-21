@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miami Management Team</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Pacifico&family=Bebas+Neue&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0612;
+    --surface: rgba(15, 8, 30, 0.85);
+    --surface2: rgba(25, 12, 50, 0.9);
+    --border: rgba(255,80,200,0.2);
+    --border2: rgba(0,230,255,0.2);
+    --pink: #ff2d9b;
+    --cyan: #00e5ff;
+    --gold: #ffd700;
+    --orange: #ff8c00;
+    --purple: #9b30ff;
+    --danger: #ff3a5c;
+    --green: #00ff9d;
+    --text: #f0eaff;
+    --muted: rgba(200,180,255,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* MIAMI BACKGROUND */
+  .bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Sky gradient */
+  .bg-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #1a0535 0%,
+      #2d0b6b 20%,
+      #8b1a6b 45%,
+      #d4426a 60%,
+      #f08030 75%,
+      #ffc060 85%,
+      #ffe090 100%
+    );
+  }
+
+  /* Sun */
+  .bg-sun {
+    position: absolute;
+    bottom: 38%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff8c0 0%, #ffe060 40%, #ff8020 80%, transparent 100%);
+    box-shadow: 0 0 80px 40px rgba(255,160,30,0.5), 0 0 200px 100px rgba(255,100,0,0.2);
+  }
+
+  /* Sun horizontal lines */
+  .bg-sun::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: -60px; right: -60px;
+    transform: translateY(-50%);
+    height: 180px;
+    background: repeating-linear-gradient(
+      transparent 0px,
+      transparent 10px,
+      rgba(255,120,0,0.7) 10px,
+      rgba(255,120,0,0.7) 12px
+    );
+    mask-image: radial-gradient(ellipse 180px 90px at 50% 50%, black 60%, transparent 100%);
+  }
+
+  /* Ocean / water reflection */
+  .bg-water {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(180deg,
+      rgba(10,3,40,0.8) 0%,
+      rgba(20,5,80,0.7) 30%,
+      rgba(30,8,100,0.6) 60%,
+      rgba(15,4,60,0.9) 100%
+    );
+  }
+
+  /* Water shimmer lines */
+  .bg-water::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent 0px,
+      transparent 5px,
+      rgba(255,180,80,0.06) 5px,
+      rgba(255,180,80,0.06) 6px
+    );
+  }
+
+  /* City silhouette */
+  .bg-city {
+    position: absolute;
+    bottom: 38%;
+    left: 0; right: 0;
+    height: 200px;
+    background:
+      /* Building shapes using gradients */
+      linear-gradient(transparent 60%, rgba(180,30,80,0.4) 60%) 5% 100%/8% 100%,
+      linear-gradient(transparent 40%, rgba(200,40,90,0.5) 40%) 13% 100%/6% 100%,
+      linear-gradient(transparent 30%, rgba(180,25,75,0.6) 30%) 19% 100%/10% 100%,
+      linear-gradient(transparent 20%, rgba(220,50,100,0.5) 20%) 29% 100%/7% 100%,
+      linear-gradient(transparent 50%, rgba(160,20,70,0.4) 50%) 36% 100%/5% 100%,
+      linear-gradient(transparent 15%, rgba(200,35,85,0.6) 15%) 41% 100%/12% 100%,
+      linear-gradient(transparent 35%, rgba(190,30,80,0.5) 35%) 53% 100%/8% 100%,
+      linear-gradient(transparent 25%, rgba(220,45,95,0.6) 25%) 61% 100%/9% 100%,
+      linear-gradient(transparent 45%, rgba(170,25,72,0.4) 45%) 70% 100%/6% 100%,
+      linear-gradient(transparent 20%, rgba(205,38,87,0.55) 20%) 76% 100%/11% 100%,
+      linear-gradient(transparent 55%, rgba(160,22,68,0.4) 55%) 87% 100%/7% 100%,
+      linear-gradient(transparent 30%, rgba(195,33,82,0.5) 30%) 94% 100%/6% 100%;
+    background-repeat: no-repeat;
+  }
+
+  /* Grid floor */
+  .bg-grid {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 42%;
+    perspective: 400px;
+    overflow: hidden;
+  }
+
+  .bg-grid-inner {
+    position: absolute;
+    bottom: 0; left: -50%; right: -50%;
+    height: 100%;
+    transform: rotateX(55deg);
+    transform-origin: bottom center;
+    background-image:
+      linear-gradient(rgba(255,50,180,0.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,50,180,0.25) 1px, transparent 1px);
+    background-size: 60px 60px;
+    background-position: center bottom;
+  }
+
+  /* Palm trees using CSS */
+  .palm { position: absolute; bottom: 38%; pointer-events: none; }
+  .palm-trunk {
+    width: 12px;
+    height: 120px;
+    background: linear-gradient(180deg, #4a2800 0%, #7a4500 50%, #5a3200 100%);
+    border-radius: 6px;
+    transform-origin: bottom center;
+  }
+  .palm.left { left: 4%; }
+  .palm.left .palm-trunk { transform: rotate(-8deg); }
+  .palm.right { right: 4%; }
+  .palm.right .palm-trunk { transform: rotate(8deg); }
+  .palm-leaves {
+    position: absolute;
+    top: -20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 64px;
+    line-height: 1;
+    filter: drop-shadow(0 0 10px rgba(0,200,80,0.4));
+  }
+
+  /* Neon glow overlay */
+  .bg-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 30% at 50% 62%, rgba(255,50,180,0.08) 0%, transparent 100%),
+      radial-gradient(ellipse 80% 20% at 50% 100%, rgba(150,0,255,0.12) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Scanlines */
+  .bg-scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* === MAIN UI === */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 16px 24px;
+    background: rgba(10,3,30,0.7);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(255,45,155,0.15), inset 0 1px 0 rgba(255,80,200,0.1);
+  }
+
+  .logo { display: flex; flex-direction: column; gap: 2px; }
+
+  .logo-top {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.6rem;
+    background: linear-gradient(135deg, #ff2d9b, #ff7de8, #00e5ff, #ff2d9b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shine 4s linear infinite;
+    text-shadow: none;
+    filter: drop-shadow(0 0 10px rgba(255,45,155,0.6));
+    line-height: 1.1;
+  }
+
+  @keyframes shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .logo-bottom {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(255,215,0,0.6);
+  }
+
+  .header-right { display: flex; gap: 10px; align-items: center; }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(10,3,30,0.8);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .dot.active {
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* GLASS CARD */
+  .glass {
+    background: rgba(10,3,30,0.75);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 0 40px rgba(255,45,155,0.1), 0 8px 32px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), transparent);
+    opacity: 0.4;
+  }
+
+  .glass.active-glow {
+    border-color: rgba(0,229,255,0.4);
+    box-shadow: 0 0 40px rgba(0,229,255,0.15), 0 0 80px rgba(255,45,155,0.1);
+  }
+
+  .glass.active-glow::before { opacity: 1; animation: scanline 2s linear infinite; }
+
+  @keyframes scanline {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* SESSION CARD */
+  .session-card { padding: 28px 32px; margin-bottom: 20px; }
+
+  .session-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .sname {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  .sdiscord {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(0,229,255,0.5);
+    margin-top: 4px;
+  }
+
+  .timer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--cyan);
+    text-shadow: 0 0 20px rgba(0,229,255,0.7), 0 0 40px rgba(0,229,255,0.3);
+    letter-spacing: 3px;
+  }
+
+  .timer.off {
+    color: rgba(150,130,200,0.3);
+    text-shadow: none;
+  }
+
+  .session-chips {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,45,155,0.15);
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    padding: 5px 12px;
+    background: rgba(255,45,155,0.08);
+    border: 1px solid rgba(255,45,155,0.2);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .chip span { color: var(--text); }
+
+  /* BUTTONS */
+  .btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+
+  .btn:hover::after { background: rgba(255,255,255,0.08); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+  .btn-start {
+    background: linear-gradient(135deg, #00c853, #00e676);
+    color: #001a09;
+    box-shadow: 0 4px 20px rgba(0,230,118,0.35);
+    font-weight: 900;
+  }
+  .btn-start:hover { box-shadow: 0 6px 30px rgba(0,230,118,0.5); }
+
+  .btn-stop {
+    background: linear-gradient(135deg, #ff2d9b, #ff6bc7);
+    color: white;
+    box-shadow: 0 4px 20px rgba(255,45,155,0.35);
+  }
+  .btn-stop:hover { box-shadow: 0 6px 30px rgba(255,45,155,0.5); }
+
+  .btn-admin {
+    background: rgba(155,48,255,0.2);
+    color: var(--purple);
+    border: 1px solid rgba(155,48,255,0.4);
+  }
+  .btn-admin:hover { background: rgba(155,48,255,0.3); box-shadow: 0 0 20px rgba(155,48,255,0.3); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    box-shadow: 0 4px 16px rgba(255,45,155,0.3);
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #b8860b, var(--gold));
+    color: #1a0e00;
+    box-shadow: 0 4px 16px rgba(255,215,0,0.3);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #c0002a, var(--danger));
+    color: white;
+  }
+
+  .btn-cyan {
+    background: linear-gradient(135deg, #006080, var(--cyan));
+    color: #001a20;
+    font-weight: 900;
+  }
+
+  .btn-sm { padding: 7px 14px; font-size: 0.85rem; letter-spacing: 1px; }
+
+  .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+
+  /* SECTION HEADER */
+  .sec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .sec-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    color: var(--pink);
+    text-shadow: 0 0 10px rgba(255,45,155,0.5);
+  }
+
+  /* LEADERBOARD */
+  .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(10,3,30,0.7);
+    border: 1px solid rgba(255,45,155,0.15);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .lb-row:hover {
+    border-color: rgba(255,45,155,0.4);
+    box-shadow: 0 0 20px rgba(255,45,155,0.1);
+  }
+
+  .lb-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    width: 22px;
+  }
+
+  .lb-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lb-did {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .lb-bar-wrap {
+    width: 70px; height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .lb-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--cyan));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  .lb-hrs {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(0,229,255,0.4);
+    white-space: nowrap;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  .lb-hrs.zero { color: var(--muted); text-shadow: none; }
+
+  .active-pill {
+    padding: 2px 8px;
+    background: rgba(0,255,157,0.12);
+    border: 1px solid rgba(0,255,157,0.3);
+    border-radius: 20px;
+    font-size: 0.62rem;
+    color: var(--green);
+    letter-spacing: 1px;
+    animation: blink 2s infinite;
+  }
+
+  /* LOG */
+  .log-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(10,3,30,0.6);
+    border: 1px solid rgba(0,229,255,0.1);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+  }
+
+  .log-user { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; font-size: 0.95rem; }
+  .log-sum { font-size: 0.73rem; color: var(--muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+
+  .log-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255,45,155,0.1);
+    border: 1px solid rgba(255,45,155,0.2);
+    color: var(--pink);
+    white-space: nowrap;
+  }
+
+  .log-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* EMPTY */
+  .empty {
+    text-align: center;
+    padding: 36px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  /* MODALS */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,1,18,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: rgba(12,5,28,0.97);
+    border: 1px solid rgba(255,45,155,0.3);
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 60px rgba(255,45,155,0.2), 0 0 120px rgba(0,0,0,0.6);
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.25s;
+    position: relative;
+    overflow: hidden;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--cyan), var(--gold));
+  }
+
+  .overlay.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--pink);
+    text-shadow: 0 0 15px rgba(255,45,155,0.5);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-title .icon {
+    width: 34px; height: 34px;
+    background: rgba(255,45,155,0.15);
+    border: 1px solid rgba(255,45,155,0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cyan);
+    margin-bottom: 7px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0,229,255,0.3);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,45,155,0.2);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--pink);
+    box-shadow: 0 0 12px rgba(255,45,155,0.2);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 85px; }
+  .form-group select option { background: #0a0620; }
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,45,155,0.1);
+  }
+
+  /* ADMIN STATS */
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-box {
+    background: rgba(255,45,155,0.06);
+    border: 1px solid rgba(255,45,155,0.15);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .stat-box .slabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .stat-box .sval {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(0,229,255,0.4);
+  }
+
+  /* ADMIN MEMBER ROW */
+  .admin-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255,45,155,0.04);
+    border: 1px solid rgba(255,45,155,0.12);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .admin-row:hover {
+    border-color: rgba(255,45,155,0.35);
+    background: rgba(255,45,155,0.08);
+  }
+
+  /* SESSION DETAIL */
+  .det-session {
+    background: rgba(0,229,255,0.03);
+    border: 1px solid rgba(0,229,255,0.1);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .det-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .det-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .det-hrs {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .det-sum {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* EDIT HOURS SECTION */
+  .edit-hours-section {
+    background: rgba(255,215,0,0.04);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .edit-hours-section h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    text-shadow: 0 0 8px rgba(255,215,0,0.4);
+  }
+
+  .edit-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .edit-row input {
+    width: 80px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .edit-row input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(255,215,0,0.2);
+  }
+
+  .edit-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* CURRENT HOURS DISPLAY */
+  .cur-hrs-display {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(0,229,255,0.4);
+    margin-bottom: 12px;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: rgba(12,5,28,0.95);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+    backdrop-filter: blur(12px);
+    max-width: 300px;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: rgba(0,255,157,0.4); color: var(--green); }
+  .toast.error { border-color: rgba(255,45,155,0.4); color: var(--pink); }
+
+  @media (max-width: 600px) {
+    .timer { font-size: 1.8rem; }
+    .admin-stats { grid-template-columns: 1fr 1fr; }
+    .modal { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MIAMI BACKGROUND -->
+<div class="bg-scene">
+  <div class="bg-sky"></div>
+  <div class="bg-sun"></div>
+  <div class="bg-city"></div>
+  <div class="bg-water"></div>
+  <div class="bg-grid"><div class="bg-grid-inner"></div></div>
+  <div class="palm left"><div class="palm-trunk"></div><div class="palm-leaves">🌴</div></div>
+  <div class="palm right"><div class="palm-trunk"></div><div class="palm-leaves">🌴</div></div>
+  <div class="bg-glow"></div>
+  <div class="bg-scan"></div>
+</div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-top">Miami</div>
+      <div class="logo-bottom">Management Team</div>
+    </div>
+    <div class="header-right">
+      <div class="status-badge">
+        <div class="dot" id="globalDot"></div>
+        <span id="globalStatus">No Active Sessions</span>
+      </div>
+      <button class="btn btn-admin btn-sm" onclick="openAdminLogin()">🔐 Admin</button>
+    </div>
+  </header>
+
+  <!-- SESSION CARD -->
+  <div class="glass session-card" id="sessionCard">
+    <div class="session-top">
+      <div>
+        <div class="sname" id="sName">No Active Session</div>
+        <div class="sdiscord" id="sDiscord">—</div>
+      </div>
+      <div class="timer off" id="timer">00:00:00</div>
+    </div>
+    <div class="session-chips">
+      <div class="chip">Mode: <span id="sMode">—</span></div>
+      <div class="chip">Started: <span id="sStart">—</span></div>
+      <div class="chip">Weekly Total: <span id="sWeekly">—</span></div>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-start" id="startBtn" onclick="openStartModal()">▶ START SESSION</button>
+    <button class="btn btn-stop" id="stopBtn" onclick="stopSession()" disabled>■ STOP SESSION</button>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="sec-head">
+    <div class="sec-title">⭐ Weekly Leaderboard</div>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted)" id="weekLabel"></span>
+  </div>
+  <div id="lbList" style="margin-bottom:36px;"></div>
+
+  <!-- SESSION LOG -->
+  <div class="sec-head">
+    <div class="sec-title">📋 Session Log</div>
+  </div>
+  <div id="logList"></div>
+
+</div>
+
+<!-- ===== START MODAL ===== -->
+<div class="overlay" id="startOverlay">
+  <div class="modal">
+    <div class="modal-title"><div class="icon">▶</div> Start Session</div>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="inName" placeholder="e.g. John Doe" />
+    </div>
+    <div class="form-group">
+      <label>Discord ID</label>
+      <input type="text" id="inDiscord" placeholder="e.g. username#1234" />
+    </div>
+    <div class="form-group">
+      <label>Session Type</label>
+      <select id="inType">
+        <option value="Ingame Time">🎮 Ingame Time</option>
+        <option value="Discord Time">💬 Discord Time</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('startOverlay')">Cancel</button>
+      <button class="btn btn-start btn-sm" onclick="confirmStart()">▶ START</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STOP / SUMMARY MODAL ===== -->
+<div class="overlay" id="stopOverlay">
+  <div class="modal">
+    <div class="modal-title"><div class="icon">📝</div> Session Summary</div>
+    <div style="background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.15);border-radius:12px;padding:16px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;" id="sumName">—</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--cyan);" id="sumDiscord">—</div>
+        </div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan);text-shadow:0 0 15px rgba(0,229,255,0.5);" id="sumDur">00:00:00</div>
+      </div>
+      <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);">Type: <span id="sumType" style="color:var(--text)">—</span></div>
+    </div>
+    <div class="form-group">
+      <label>What did you do this session?</label>
+      <textarea id="inSummary" placeholder="Brief summary of your activities..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('stopOverlay')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="confirmStop()">✓ SAVE & END</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN LOGIN ===== -->
+<div class="overlay" id="adminLoginOverlay">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-title"><div class="icon">🔐</div> Admin Access</div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="adminPwd" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')checkAdmin()" />
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('adminLoginOverlay')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="checkAdmin()">ENTER</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div class="overlay" id="adminPanelOverlay">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-title"><div class="icon">👑</div> Admin Panel</div>
+    <div class="admin-stats" id="adminStats"></div>
+
+    <!-- SEARCH BAR -->
+    <div style="position:relative;margin-bottom:14px;">
+      <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:0.85rem;pointer-events:none;">🔍</span>
+      <input
+        type="text"
+        id="memberSearch"
+        placeholder="Search by Discord ID or name..."
+        oninput="filterMembers()"
+        style="width:100%;padding:10px 14px 10px 36px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.25);border-radius:10px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.82rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;"
+        onfocus="this.style.borderColor='var(--cyan)';this.style.boxShadow='0 0 12px rgba(0,229,255,0.2)'"
+        onblur="this.style.borderColor='rgba(0,229,255,0.25)';this.style.boxShadow='none'"
+      />
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="sec-title" style="font-size:0.9rem;">Team Members <span id="memberCount" style="font-size:0.7rem;color:var(--muted);letter-spacing:1px;"></span></div>
+      <button class="btn btn-gold btn-sm" onclick="resetWeekly()">🔄 RESET WEEKLY</button>
+    </div>
+    <div id="adminMemberList" style="margin-bottom:8px;max-height:340px;overflow-y:auto;"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="isAdmin=false;closeModal('adminPanelOverlay')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEMBER DETAIL + EDIT ===== -->
+<div class="overlay" id="memberDetailOverlay">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-title"><div class="icon">📊</div> <span id="detTitle">Member</span></div>
+    <div id="detContent"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('memberDetailOverlay')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Firebase SDK (compat — global scope, no import needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+
+// ===== FIREBASE INIT =====
+const firebaseConfig = {
+  apiKey: "AIzaSyC_m-tg1whgnjpP2BjHzOEe3N81fik0Lpc",
+  authDomain: "miami-management.firebaseapp.com",
+  projectId: "miami-management",
+  storageBucket: "miami-management.firebasestorage.app",
+  messagingSenderId: "631604358718",
+  appId: "1:631604358718:web:8bcf1638c252b994072b6f"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const ADMIN_PASS = 'MRP';
+
+// ===== LOCAL STATE (mirrors Firestore) =====
+let sessions = [];   // array of session objects
+let members  = {};   // { discordId: { name, discordId } }
+let weekStartTs = getWeekStartISO();
+let active = JSON.parse(sessionStorage.getItem('mrp_active') || 'null');
+let ticker = null;
+let _adminList = [];
+let actives = {}; // realtime map of currently active sessions (discordId -> active obj)
+let isAdmin = false; // tracks whether admin password has been entered
+
+// ===== HELPERS =====
+function getWeekStartISO() {
+  const d = new Date();
+  const diff = d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1);
+  const m = new Date(d); m.setDate(diff); m.setHours(0,0,0,0);
+  return m.toISOString();
+}
+
+function fmt(sec) {
+  const h = String(Math.floor(sec/3600)).padStart(2,'0');
+  const m = String(Math.floor((sec%3600)/60)).padStart(2,'0');
+  const s = String(sec%60).padStart(2,'0');
+  return `${h}:${m}:${s}`;
+}
+
+function fmtH(sec) { return (sec/3600).toFixed(1)+'h'; }
+
+function weekSecs(discordId) {
+  const ws = new Date(weekStartTs).getTime();
+  return sessions
+    .filter(s => s.discordId === discordId && new Date(s.endTime).getTime() >= ws)
+    .reduce((a,s) => a + s.duration, 0);
+}
+
+function totalWeekly() {
+  const ws = new Date(weekStartTs).getTime();
+  return sessions.filter(s => new Date(s.endTime).getTime() >= ws).reduce((a,s) => a+s.duration, 0);
+}
+
+// ===== MODALS =====
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openAdminLogin() {
+  openModal('adminLoginOverlay');
+  setTimeout(() => document.getElementById('adminPwd').focus(), 200);
+}
+
+function checkAdmin() {
+  if (document.getElementById('adminPwd').value === ADMIN_PASS) {
+    isAdmin = true;
+    closeModal('adminLoginOverlay');
+    openAdminPanel();
+  } else {
+    showToast('Wrong password!', 'error');
+  }
+}
+
+// ===== START SESSION =====
+function openStartModal() {
+  if (active) { showToast('Session already active!', 'error'); return; }
+  openModal('startOverlay');
+}
+
+async function confirmStart() {
+  const name    = document.getElementById('inName').value.trim();
+  const discord = document.getElementById('inDiscord').value.trim();
+  const type    = document.getElementById('inType').value;
+  if (!name || !discord) { showToast('Fill in all fields', 'error'); return; }
+
+  await db.collection('members').doc(discord).set({ name, discordId: discord }, { merge: true });
+
+  active = { name, discordId: discord, type, startTime: new Date().toISOString(), startTs: Date.now() };
+  sessionStorage.setItem('mrp_active', JSON.stringify(active));
+  closeModal('startOverlay');
+  document.getElementById('inName').value = '';
+  document.getElementById('inDiscord').value = '';
+  // publish active session so everyone sees it
+  try {
+    await db.collection('actives').doc(discord).set({
+      name: active.name,
+      discordId: active.discordId,
+      type: active.type,
+      startTime: active.startTime,
+      startTs: active.startTs
+    });
+  } catch (e) { console.warn('failed to write active', e); }
+
+  startTicker();
+  showToast(`Session started for ${name}!`, 'success');
+}
+
+function startTicker() {
+  if (!active) return;
+  updateCard();
+  document.getElementById('stopBtn').disabled = false;
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('timer').classList.remove('off');
+  document.getElementById('sessionCard').classList.add('active-glow');
+  document.getElementById('globalDot').classList.add('active');
+  document.getElementById('globalStatus').textContent = `${active.name} • Active`;
+
+  ticker = setInterval(() => {
+    const el = Math.floor((Date.now() - active.startTs) / 1000);
+    document.getElementById('timer').textContent = fmt(el);
+  }, 1000);
+}
+
+function updateCard() {
+  if (!active) return;
+  document.getElementById('sName').textContent    = active.name;
+  document.getElementById('sDiscord').textContent = active.discordId;
+  document.getElementById('sMode').textContent    = active.type;
+  document.getElementById('sStart').textContent   = new Date(active.startTime).toLocaleTimeString();
+  document.getElementById('sWeekly').textContent  = fmtH(weekSecs(active.discordId));
+}
+
+// ===== STOP SESSION =====
+function stopSession() {
+  if (!active) return;
+  clearInterval(ticker);
+  const el = Math.floor((Date.now() - active.startTs) / 1000);
+  document.getElementById('sumName').textContent    = active.name;
+  document.getElementById('sumDiscord').textContent = active.discordId;
+  document.getElementById('sumDur').textContent     = fmt(el);
+  document.getElementById('sumType').textContent    = active.type;
+  document.getElementById('inSummary').value = '';
+  openModal('stopOverlay');
+}
+
+async function confirmStop() {
+  const summary = document.getElementById('inSummary').value.trim();
+  if (!summary) { showToast('Add a brief summary!', 'error'); return; }
+  const el = Math.floor((Date.now() - active.startTs) / 1000);
+  // remove active marker for this user so others see them go offline
+  try { await db.collection('actives').doc(active.discordId).delete(); } catch(e) { }
+
+  await db.collection('sessions').add({
+    name:      active.name,
+    discordId: active.discordId,
+    type:      active.type,
+    startTime: active.startTime,
+    endTime:   new Date().toISOString(),
+    duration:  el,
+    summary
+  });
+
+  active = null;
+  sessionStorage.removeItem('mrp_active');
+  closeModal('stopOverlay');
+  resetCard();
+  showToast(`Session saved! ${fmt(el)} logged.`, 'success');
+}
+
+function resetCard() {
+  clearInterval(ticker);
+  document.getElementById('stopBtn').disabled = true;
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('timer').textContent = '00:00:00';
+  document.getElementById('timer').classList.add('off');
+  document.getElementById('sessionCard').classList.remove('active-glow');
+  document.getElementById('sName').textContent    = 'No Active Session';
+  document.getElementById('sDiscord').textContent = '—';
+  document.getElementById('sMode').textContent    = '—';
+  document.getElementById('sStart').textContent   = '—';
+  document.getElementById('sWeekly').textContent  = '—';
+  document.getElementById('globalDot').classList.remove('active');
+  document.getElementById('globalStatus').textContent = 'No Active Sessions';
+}
+
+// ===== RENDER LEADERBOARD =====
+function renderLB() {
+  const ws  = new Date(weekStartTs).getTime();
+  const map = {};
+
+  sessions.forEach(s => {
+    if (new Date(s.endTime).getTime() < ws) return;
+    if (!map[s.discordId]) map[s.discordId] = { name: s.name, discordId: s.discordId, sec: 0 };
+    map[s.discordId].sec += s.duration;
+  });
+
+  // include currently active users (from shared actives) so they appear for everyone
+  Object.values(actives).forEach(a => {
+    if (!map[a.discordId]) map[a.discordId] = { name: a.name || 'Unknown', discordId: a.discordId, sec: 0 };
+  });
+
+  if (active && !map[active.discordId])
+    map[active.discordId] = { name: active.name, discordId: active.discordId, sec: 0 };
+
+  const list   = Object.values(map).sort((a,b) => b.sec - a.sec);
+  const maxSec = list.length ? Math.max(1, ...list.map(l => l.sec)) : 1;
+  const c      = document.getElementById('lbList');
+
+  if (!list.length) { c.innerHTML = '<div class="empty">No sessions logged yet this week.</div>'; return; }
+
+  const pal = [
+    'linear-gradient(135deg,#ff2d9b,#ff7de8)',
+    'linear-gradient(135deg,#00b8d4,#00e5ff)',
+    'linear-gradient(135deg,#ffd700,#ff8c00)',
+    'linear-gradient(135deg,#9b30ff,#d070ff)',
+    'linear-gradient(135deg,#00c853,#69f0ae)'
+  ];
+
+  c.innerHTML = list.map((m, i) => {
+    const pct   = Math.round((m.sec / maxSec) * 100);
+    const ini   = m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const isAct = (!!actives[m.discordId]) || (active && active.discordId === m.discordId);
+    const safe  = btoa(m.discordId);
+    return `
+      <div class="lb-row" onclick="_openDetail('${safe}')">
+        <div class="lb-rank">#${i+1}</div>
+        <div class="lb-avatar" style="background:${pal[i%pal.length]};color:${i===0?'#1a0010':'white'}">${ini}</div>
+        <div class="lb-info">
+          <div class="lb-name">${m.name}</div>
+          <div class="lb-did">${m.discordId}</div>
+        </div>
+        ${isAct ? '<div class="active-pill">● LIVE</div>' : ''}
+        <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%"></div></div>
+        <div class="lb-hrs ${m.sec===0?'zero':''}">${fmtH(m.sec)}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('weekLabel').textContent = `Week of ${new Date(weekStartTs).toLocaleDateString()}`;
+}
+
+// ===== RENDER LOG =====
+function renderLog() {
+  const c      = document.getElementById('logList');
+  const recent = [...sessions].reverse().slice(0, 20);
+  if (!recent.length) { c.innerHTML = '<div class="empty">No sessions logged yet.</div>'; return; }
+  c.innerHTML = recent.map(s => {
+    const safe = btoa(s.discordId);
+    return `
+    <div class="log-row" onclick="_openDetail('${safe}')">
+      <div>
+        <div class="log-user">${s.name}</div>
+        <div class="log-sum">${s.summary}</div>
+      </div>
+      <div class="log-type">${s.type}</div>
+      <div class="log-time">${fmtH(s.duration)}<br>${new Date(s.endTime).toLocaleDateString()}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== ADMIN PANEL =====
+function buildAdminList() {
+  const ws    = new Date(weekStartTs).getTime();
+  const mData = {};
+
+  sessions.forEach(s => {
+    if (!mData[s.discordId]) mData[s.discordId] = { name: s.name, discordId: s.discordId, wkSec: 0, totSec: 0, sessCount: 0 };
+    mData[s.discordId].totSec += s.duration;
+    if (new Date(s.endTime).getTime() >= ws) mData[s.discordId].wkSec += s.duration;
+    mData[s.discordId].sessCount++;
+  });
+
+  Object.values(members).forEach(m => {
+    if (!mData[m.discordId]) mData[m.discordId] = { name: m.name, discordId: m.discordId, wkSec: 0, totSec: 0, sessCount: 0 };
+  });
+
+  return Object.values(mData).sort((a,b) => b.wkSec - a.wkSec);
+}
+
+function renderAdminStats() {
+  const totalM = Object.keys(members).length;
+  const totalS = sessions.length;
+  const wkH   = totalWeekly();
+  const actN  = Object.keys(actives).length;
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-box"><div class="slabel">Members</div><div class="sval">${totalM}</div></div>
+    <div class="stat-box"><div class="slabel">Weekly Hours</div><div class="sval">${fmtH(wkH)}</div></div>
+    <div class="stat-box"><div class="slabel">Total Sessions</div><div class="sval">${totalS}</div></div>
+    <div class="stat-box"><div class="slabel">Active Now</div><div class="sval" style="color:${actN?'var(--green)':'var(--muted)'}">${actN}</div></div>
+  `;
+}
+
+function renderAdminMemberList(list) {
+  const mc      = document.getElementById('adminMemberList');
+  const countEl = document.getElementById('memberCount');
+  if (countEl) countEl.textContent = `(${list.length})`;
+
+  if (!list.length) { mc.innerHTML = '<div class="empty">No members found.</div>'; return; }
+
+  mc.innerHTML = list.map(m => {
+    const safeId = btoa(m.discordId);
+    return `
+      <div class="admin-row" style="gap:10px;">
+        <div style="flex:1;min-width:0;cursor:pointer;" onclick="_openDetail('${safeId}')">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;">${m.name}</div>
+            ${actives[m.discordId] ? '<div class="active-pill">● LIVE</div>' : ''}
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--cyan);">${m.discordId}</div>
+        </div>
+        <div style="text-align:right;cursor:pointer;" onclick="_openDetail('${safeId}')">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--cyan);font-weight:700;">${fmtH(m.wkSec)} this week</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);">${fmtH(m.totSec)} all time · ${m.sessCount} sessions</div>
+        </div>
+        <button class="btn btn-danger btn-sm" style="padding:6px 10px;font-size:0.75rem;letter-spacing:1px;flex-shrink:0;"
+          onclick="event.stopPropagation();_removeMember('${safeId}')" title="Remove member">✕</button>
+      </div>`;
+  }).join('');
+}
+
+function openAdminPanel() {
+  renderAdminStats();
+  const searchEl = document.getElementById('memberSearch');
+  if (searchEl) searchEl.value = '';
+  _adminList = buildAdminList();
+  renderAdminMemberList(_adminList);
+  openModal('adminPanelOverlay');
+}
+
+function filterMembers() {
+  const q        = (document.getElementById('memberSearch')?.value || '').toLowerCase().trim();
+  const filtered = q ? _adminList.filter(m => m.discordId.toLowerCase().includes(q) || m.name.toLowerCase().includes(q)) : _adminList;
+  renderAdminMemberList(filtered);
+}
+
+async function removeMember(discordId) {
+  const member = members[discordId];
+  const name   = member?.name || discordId;
+  if (!confirm(`Remove "${name}" (${discordId}) and ALL their session data? This cannot be undone.`)) return;
+
+  const batch = db.batch();
+
+  // Delete member doc
+  batch.delete(db.collection('members').doc(discordId));
+
+  // Delete all their sessions
+  const snap = await db.collection('sessions').where('discordId', '==', discordId).get();
+  snap.forEach(d => batch.delete(d.ref));
+
+  await batch.commit();
+  showToast(`Removed ${name} from the team.`, 'success');
+}
+
+async function resetWeekly() {
+  if (!confirm('Reset all weekly hours? This cannot be undone.')) return;
+  weekStartTs = new Date().toISOString();
+  await db.collection('config').doc('settings').set({ weekStart: weekStartTs }, { merge: true });
+  renderLB();
+  renderAdminStats();
+  _adminList = buildAdminList();
+  filterMembers();
+  showToast('Weekly hours reset!', 'success');
+}
+
+// Use base64 to safely pass discord IDs with special chars through onclick
+function _openDetail(b64)   { openMemberDetail(atob(b64)); }
+function _removeMember(b64) { removeMember(atob(b64)); }
+
+function openMemberDetail(discordId) {
+  if (!isAdmin) { showToast('Admin access required.', 'error'); return; }
+  const memberSessions = sessions.filter(s => s.discordId === discordId).reverse();
+  const member         = members[discordId] || { name: memberSessions[0]?.name || 'Unknown', discordId };
+  const wkSec          = weekSecs(discordId);
+  const totSec         = sessions.filter(s => s.discordId === discordId).reduce((a,s) => a+s.duration, 0);
+  const b64            = btoa(unescape(encodeURIComponent(discordId)));
+
+  document.getElementById('detTitle').textContent = member.name;
+
+  let html = `
+    <div class="cur-hrs-display">Weekly: ${fmtH(wkSec)} &nbsp;|&nbsp; All Time: ${fmtH(totSec)}</div>
+    <div class="edit-hours-section">
+      <h4>➕ Add Time</h4>
+      <div class="edit-row">
+        <input type="number" id="addH" placeholder="0" min="0" max="999" style="width:70px;" />
+        <span class="edit-label">hrs</span>
+        <input type="number" id="addM" placeholder="0" min="0" max="59" style="width:70px;" />
+        <span class="edit-label">min</span>
+        <button class="btn btn-cyan btn-sm" onclick="_addTime('${b64}')">ADD</button>
+      </div>
+    </div>
+    <div class="edit-hours-section" style="border-color:rgba(255,45,155,0.3);background:rgba(255,45,155,0.04);">
+      <h4 style="color:var(--pink);text-shadow:0 0 8px rgba(255,45,155,0.4);">➖ Remove Time</h4>
+      <div class="edit-row">
+        <input type="number" id="remH" placeholder="0" min="0" max="999" style="width:70px;border-color:rgba(255,45,155,0.25);" />
+        <span class="edit-label">hrs</span>
+        <input type="number" id="remM" placeholder="0" min="0" max="59" style="width:70px;border-color:rgba(255,45,155,0.25);" />
+        <span class="edit-label">min</span>
+        <button class="btn btn-stop btn-sm" onclick="_removeTime('${b64}')">REMOVE</button>
+      </div>
+    </div>
+    <div style="font-family:'Bebas Neue',sans-serif;letter-spacing:2px;color:var(--cyan);font-size:0.9rem;margin-bottom:10px;">SESSION HISTORY</div>
+  `;
+
+  if (!memberSessions.length) html += '<div class="empty">No sessions logged.</div>';
+  else html += memberSessions.map(s => `
+    <div class="det-session">
+      <div class="det-header">
+        <div>
+          <div class="det-time">${new Date(s.startTime).toLocaleString()}</div>
+          <div style="font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;">${s.type}</div>
+        </div>
+        <div class="det-hrs">${fmtH(s.duration)}</div>
+      </div>
+      <div class="det-sum">${s.summary}</div>
+    </div>`).join('');
+
+  document.getElementById('detContent').innerHTML = html;
+  openModal('memberDetailOverlay');
+}
+
+async function _addTime(b64) {
+  const discordId = decodeURIComponent(escape(atob(b64)));
+  const h   = parseInt(document.getElementById('addH').value) || 0;
+  const m   = parseInt(document.getElementById('addM').value) || 0;
+  const sec = h * 3600 + m * 60;
+  if (sec <= 0) { showToast('Enter hours or minutes to add', 'error'); return; }
+  const name = members[discordId]?.name || discordId;
+
+  await db.collection('sessions').add({
+    name, discordId,
+    type:      'Admin Adjustment',
+    startTime: new Date().toISOString(),
+    endTime:   new Date().toISOString(),
+    duration:  sec,
+    summary:   `Admin manually added ${h}h ${m}m`
+  });
+
+  showToast(`Added ${h}h ${m}m to ${name}`, 'success');
+  openMemberDetail(discordId);
+}
+
+async function _removeTime(b64) {
+  const discordId = decodeURIComponent(escape(atob(b64)));
+  const h   = parseInt(document.getElementById('remH').value) || 0;
+  const m   = parseInt(document.getElementById('remM').value) || 0;
+  const sec = h * 3600 + m * 60;
+  if (sec <= 0) { showToast('Enter hours or minutes to remove', 'error'); return; }
+
+  const name = members[discordId]?.name || discordId;
+  let remaining = sec;
+
+  const snap = await db.collection('sessions')
+    .where('discordId', '==', discordId)
+    .orderBy('endTime', 'desc')
+    .get();
+
+  const batch = db.batch();
+  for (const d of snap.docs) {
+    if (remaining <= 0) break;
+    const dur = d.data().duration;
+    if (dur <= remaining) {
+      remaining -= dur;
+      batch.delete(d.ref);
+    } else {
+      batch.update(d.ref, { duration: dur - remaining });
+      remaining = 0;
+    }
+  }
+  await batch.commit();
+
+  if (remaining > 0) showToast(`Removed what was available. ${name} is now at 0h.`, 'success');
+  else showToast(`Removed ${h}h ${m}m from ${name}`, 'success');
+  openMemberDetail(discordId);
+}
+
+// ===== TOAST =====
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ===== REAL-TIME LISTENERS =====
+db.collection('sessions').orderBy('endTime', 'asc').onSnapshot(snap => {
+  sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderLB();
+  renderLog();
+  if (active) updateCard();
+});
+
+db.collection('members').onSnapshot(snap => {
+  members = {};
+  snap.forEach(d => { members[d.id] = d.data(); });
+});
+
+// listen for currently active sessions (shared across users)
+db.collection('actives').onSnapshot(snap => {
+  actives = {};
+  snap.forEach(d => { actives[d.id] = d.data(); });
+  updateActivesUI();
+  renderLB();
+  renderAdminStats();
+});
+
+function updateActivesUI() {
+  const keys = Object.keys(actives);
+  const cnt = keys.length;
+  const dot = document.getElementById('globalDot');
+  const status = document.getElementById('globalStatus');
+  if (!dot || !status) return;
+  if (cnt === 0) {
+    dot.classList.remove('active');
+    status.textContent = 'No Active Sessions';
+  } else if (cnt === 1) {
+    dot.classList.add('active');
+    const a = actives[keys[0]];
+    status.textContent = `${a.name} • Active`;
+  } else {
+    dot.classList.add('active');
+    status.textContent = `${cnt} Active`;
+  }
+}
+
+db.collection('config').doc('settings').get().then(d => {
+  if (d.exists && d.data().weekStart) {
+    weekStartTs = d.data().weekStart;
+    renderLB();
+  }
+});
+
+// ===== INIT =====
+// try to remove active marker if user closes tab (best-effort)
+window.addEventListener('beforeunload', () => {
+  if (active && active.discordId) {
+    try { db.collection('actives').doc(active.discordId).delete(); } catch(e) {}
+  }
+});
+if (active) startTicker();
+</script>
+</body>
+</html>
