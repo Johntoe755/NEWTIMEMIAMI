@@ -1061,7 +1061,7 @@
     </div>
     <div id="adminMemberList" style="margin-bottom:8px;max-height:340px;overflow-y:auto;"></div>
     <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" onclick="closeModal('adminPanelOverlay')">Close</button>
+      <button class="btn btn-ghost btn-sm" onclick="isAdmin=false;closeModal('adminPanelOverlay')">Close</button>
     </div>
   </div>
 </div>
@@ -1107,6 +1107,7 @@ let active = JSON.parse(sessionStorage.getItem('mrp_active') || 'null');
 let ticker = null;
 let _adminList = [];
 let actives = {}; // realtime map of currently active sessions (discordId -> active obj)
+let isAdmin = false; // tracks whether admin password has been entered
 
 // ===== HELPERS =====
 function getWeekStartISO() {
@@ -1148,6 +1149,7 @@ function openAdminLogin() {
 
 function checkAdmin() {
   if (document.getElementById('adminPwd').value === ADMIN_PASS) {
+    isAdmin = true;
     closeModal('adminLoginOverlay');
     openAdminPanel();
   } else {
@@ -1450,6 +1452,7 @@ function _openDetail(b64)   { openMemberDetail(atob(b64)); }
 function _removeMember(b64) { removeMember(atob(b64)); }
 
 function openMemberDetail(discordId) {
+  if (!isAdmin) { showToast('Admin access required.', 'error'); return; }
   const memberSessions = sessions.filter(s => s.discordId === discordId).reverse();
   const member         = members[discordId] || { name: memberSessions[0]?.name || 'Unknown', discordId };
   const wkSec          = weekSecs(discordId);
@@ -1533,11 +1536,17 @@ async function _removeTime(b64) {
 
   const snap = await db.collection('sessions')
     .where('discordId', '==', discordId)
-    .orderBy('endTime', 'desc')
     .get();
 
+  // Sort newest-first in JS to avoid requiring a Firestore composite index
+  const sorted = snap.docs.slice().sort((a, b) => {
+    const ta = a.data().endTime || '';
+    const tb = b.data().endTime || '';
+    return tb.localeCompare(ta);
+  });
+
   const batch = db.batch();
-  for (const d of snap.docs) {
+  for (const d of sorted) {
     if (remaining <= 0) break;
     const dur = d.data().duration;
     if (dur <= remaining) {
