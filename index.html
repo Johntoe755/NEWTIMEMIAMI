@@ -1250,6 +1250,8 @@ function renderAdminMemberList(list) {
           <div style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--cyan);font-weight:700;">${fmtH(m.wkSec)} this week</div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);">${fmtH(m.totSec)} all time · ${m.sessCount} sessions</div>
         </div>
+        ${actives[m.discordId] ? `<button class="btn btn-stop btn-sm" style="padding:6px 10px;font-size:0.75rem;letter-spacing:1px;flex-shrink:0;background:rgba(255,60,60,0.15);border-color:rgba(255,60,60,0.5);color:#ff4444;"
+          onclick="event.stopPropagation();_forceStop('${safeId}')" title="Force stop session">⏹ STOP</button>` : ''}
         <button class="btn btn-danger btn-sm" style="padding:6px 10px;font-size:0.75rem;letter-spacing:1px;flex-shrink:0;"
           onclick="event.stopPropagation();_removeMember('${safeId}')" title="Remove member">✕</button>
       </div>`;
@@ -1303,6 +1305,43 @@ async function resetWeekly() {
 // Use base64 to safely pass discord IDs with special chars through onclick
 function _openDetail(b64)   { openMemberDetail(atob(b64)); }
 function _removeMember(b64) { removeMember(atob(b64)); }
+function _forceStop(b64)    { forceStopSession(atob(b64)); }
+
+async function forceStopSession(discordId) {
+  const activeData = actives[discordId];
+  if (!activeData) { showToast('No active session found for this member.', 'error'); return; }
+  const name = activeData.name || members[discordId]?.name || discordId;
+  if (!confirm(`Force stop session for "${name}"? Their session will be saved with no summary.`)) return;
+
+  const now     = new Date();
+  const startTs = activeData.startTs || Date.now();
+  const duration = Math.floor((now.getTime() - startTs) / 1000);
+
+  try {
+    // Save the session to Firestore
+    await db.collection('sessions').add({
+      name,
+      discordId,
+      type:      activeData.type || 'On Duty',
+      startTime: activeData.startTime || new Date(startTs).toISOString(),
+      endTime:   now.toISOString(),
+      duration:  duration > 0 ? duration : 1,
+      summary:   'Session force-stopped by admin.'
+    });
+
+    // Remove from actives
+    await db.collection('actives').doc(discordId).delete();
+
+    showToast(`Stopped session for ${name}. ${fmtH(duration)} logged.`, 'success');
+    // Refresh admin panel
+    _adminList = buildAdminList();
+    renderAdminMemberList(_adminList);
+    renderAdminStats();
+  } catch(e) {
+    console.error(e);
+    showToast('Failed to force stop session.', 'error');
+  }
+}
 
 function openMemberDetail(discordId) {
   if (!isAdmin) { showToast('Admin access required.', 'error'); return; }
