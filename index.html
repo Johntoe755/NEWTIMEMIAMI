@@ -2197,16 +2197,7 @@ function updateMgmtAdminUI() {
   const dBtn = document.getElementById('addDirectorBtn');
   if (dBtn) dBtn.style.display = isAdmin ? '' : 'none';
   renderRoster();
-  
-// Ensure John is Community Director
-(function() {
-  let dirs = loadDirectors();
-  const idx = dirs.findIndex(d => d.name === 'John' && d.category === 'community');
-  const johnEntry = { id: idx >= 0 ? dirs[idx].id : genId(), name: 'John', discord: '', category: 'community' };
-  if (idx >= 0) { dirs[idx] = johnEntry; } else { dirs.push(johnEntry); }
-  saveDirectors(dirs);
-})();
-renderDirectors();
+  renderDirectors();
 }
 renderRoster();
 
