@@ -1431,7 +1431,7 @@
     </div>
     <div id="adminMemberList" style="margin-bottom:8px;max-height:340px;overflow-y:auto;"></div>
     <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" onclick="isAdmin=false;updateMgmtAdminUI();closeModal('adminPanelOverlay')">Close</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('adminPanelOverlay')">Close</button>
     </div>
   </div>
 </div>
@@ -2300,6 +2300,19 @@ function deleteDirector(id) {
     if (e.target === this) this.classList.remove('open');
   });
 });
+
+// Always upsert the 4 directors with correct info
+(function() {
+  const defaults = [
+    { name: 'John',     discord: '789652968336785418', category: 'community'  },
+    { name: 'M. Alan',  discord: '719430241617051710', category: 'staff'      },
+    { name: 'A. James', discord: '601498676522778626', category: 'department' },
+    { name: 'Ivan',     discord: '329295615987154945', category: 'gang'       },
+  ];
+  let dirs = loadDirectors().filter(d => !defaults.find(def => def.category === d.category));
+  defaults.forEach(def => dirs.push({ id: genId(), ...def }));
+  saveDirectors(dirs);
+})();
 
 renderDirectors();
 </script>
