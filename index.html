@@ -759,6 +759,289 @@
     .admin-stats { grid-template-columns: 1fr 1fr; }
     .modal { padding: 24px; }
   }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    padding-bottom: 0;
+  }
+  .nav-tab {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s;
+    position: relative;
+    bottom: -1px;
+  }
+  .nav-tab:hover { color: var(--cyan); }
+  .nav-tab.active {
+    color: var(--cyan);
+    background: rgba(0,229,255,0.06);
+    border-color: rgba(0,229,255,0.2);
+    border-bottom: 1px solid #0b0518;
+    text-shadow: 0 0 10px rgba(0,229,255,0.4);
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* MANAGEMENT ROSTER */
+  .mgmt-category {
+    margin-bottom: 28px;
+  }
+  .mgmt-cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+  }
+  .mgmt-cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    font-size: 1.05rem;
+  }
+  .mgmt-cat-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    opacity: 0.6;
+  }
+  /* Category colours */
+  .cat-senior .mgmt-cat-header { border-color: rgba(255,60,60,0.35); }
+  .cat-senior .mgmt-cat-title  { color: #ff4444; text-shadow: 0 0 10px rgba(255,60,60,0.5); }
+  .cat-management .mgmt-cat-header { border-color: rgba(178,102,255,0.35); }
+  .cat-management .mgmt-cat-title  { color: #b266ff; text-shadow: 0 0 10px rgba(178,102,255,0.5); }
+  .cat-junior .mgmt-cat-header { border-color: rgba(0,229,255,0.35); }
+  .cat-junior .mgmt-cat-title  { color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.5); }
+  .cat-trial .mgmt-cat-header { border-color: rgba(148,0,211,0.45); }
+  .cat-trial .mgmt-cat-title  { color: #9400d3; text-shadow: 0 0 10px rgba(148,0,211,0.6); }
+
+  /* Member row */
+  .mgmt-member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    border-radius: 10px;
+    margin-bottom: 7px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.18s;
+    gap: 10px;
+  }
+  .mgmt-member:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
+  .cat-senior .mgmt-member  { border-left: 3px solid rgba(255,68,68,0.6); }
+  .cat-management .mgmt-member { border-left: 3px solid rgba(178,102,255,0.6); }
+  .cat-junior .mgmt-member  { border-left: 3px solid rgba(0,229,255,0.6); }
+  .cat-trial .mgmt-member   { border-left: 3px solid rgba(148,0,211,0.7); }
+
+  .mgmt-info { flex: 1; min-width: 0; }
+  .mgmt-name {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1.5px;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .mgmt-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.71rem;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .mgmt-discord {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.28);
+  }
+  .mgmt-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .mgmt-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.15s;
+  }
+  .mgmt-btn:hover { border-color: rgba(0,229,255,0.4); color: var(--cyan); }
+  .mgmt-btn.del:hover { border-color: rgba(255,60,60,0.4); color: #ff4444; }
+  .mgmt-empty {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 16px;
+    font-style: italic;
+  }
+  .mgmt-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: 1px dashed rgba(255,255,255,0.12);
+    background: transparent;
+    color: rgba(255,255,255,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.18s;
+  }
+  .mgmt-add-btn:hover { border-color: rgba(0,229,255,0.3); color: var(--cyan); }
+
+  /* Add Member Modal */
+  .mgmt-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .mgmt-modal-overlay.open { display: flex; }
+  .mgmt-modal {
+    background: #0d0620;
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0 40px rgba(0,229,255,0.08);
+  }
+  .mgmt-modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0,229,255,0.4);
+  }
+  .mgmt-field { margin-bottom: 14px; }
+  .mgmt-field label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  .mgmt-field input, .mgmt-field select {
+    width: 100%;
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.83rem;
+    box-sizing: border-box;
+  }
+  .mgmt-field input:focus, .mgmt-field select:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px rgba(0,229,255,0.15);
+  }
+  .mgmt-field select option { background: #0d0620; }
+  .mgmt-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* Move modal */
+  .move-cat-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .move-cat-btn:hover { background: rgba(0,229,255,0.06); border-color: rgba(0,229,255,0.25); }
+  .move-cat-btn .mcat-label { font-size: 0.65rem; display: block; margin-top: 2px; }
+
+  /* DIRECTOR PAGE */
+  .director-category { margin-bottom: 28px; }
+  .director-cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+  }
+  .director-cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    font-size: 1.05rem;
+  }
+  .director-cat-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+  .director-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    border-radius: 10px;
+    margin-bottom: 7px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.18s;
+    gap: 10px;
+  }
+  .director-row:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
+  .director-row-name {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1.5px;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .director-row-discord {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.28);
+  }
+  .director-actions { display: flex; gap: 6px; }
+  .director-empty {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.18);
+    padding: 10px 16px;
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
@@ -785,6 +1068,16 @@
       <button class="btn btn-admin btn-sm" onclick="openAdminLogin()">🔐 Admin</button>
     </div>
   </header>
+
+  <!-- NAV TABS -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchPage('home', this)">🏠 Home</button>
+    <button class="nav-tab" onclick="switchPage('jobs', this)">💼 Management Jobs</button>
+    <button class="nav-tab" onclick="switchPage('director', this)">🌴 Miami Director</button>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
 
   <!-- SESSION CARD -->
   <div class="glass session-card" id="sessionCard">
@@ -819,6 +1112,230 @@
     <div class="sec-title">📋 Session Log</div>
   </div>
   <div id="logList"></div>
+
+  </div><!-- /page-home -->
+
+  <!-- MANAGEMENT JOBS PAGE -->
+  <div class="page" id="page-jobs">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div class="sec-title">💼 Management Roster</div>
+      <button class="btn btn-primary btn-sm" id="addMemberBtn" style="display:none;" onclick="openAddMember()">+ Add Member</button>
+    </div>
+
+    <!-- Senior Management -->
+    <div class="mgmt-category cat-senior" id="cat-senior">
+      <div class="mgmt-cat-header">
+        <span class="mgmt-cat-title">Senior Management</span>
+        <span class="mgmt-cat-count" id="count-senior">0 members</span>
+      </div>
+      <div class="mgmt-list" id="list-senior"></div>
+    </div>
+
+    <!-- Management -->
+    <div class="mgmt-category cat-management" id="cat-management">
+      <div class="mgmt-cat-header">
+        <span class="mgmt-cat-title">Management</span>
+        <span class="mgmt-cat-count" id="count-management">0 members</span>
+      </div>
+      <div class="mgmt-list" id="list-management"></div>
+    </div>
+
+    <!-- Junior Management -->
+    <div class="mgmt-category cat-junior" id="cat-junior">
+      <div class="mgmt-cat-header">
+        <span class="mgmt-cat-title">Junior Management</span>
+        <span class="mgmt-cat-count" id="count-junior">0 members</span>
+      </div>
+      <div class="mgmt-list" id="list-junior"></div>
+    </div>
+
+    <!-- Trial Management -->
+    <div class="mgmt-category cat-trial" id="cat-trial">
+      <div class="mgmt-cat-header">
+        <span class="mgmt-cat-title">Trial Management</span>
+        <span class="mgmt-cat-count" id="count-trial">0 members</span>
+      </div>
+      <div class="mgmt-list" id="list-trial"></div>
+    </div>
+
+  </div><!-- /page-jobs -->
+  <!-- MIAMI DIRECTOR PAGE -->
+  <div class="page" id="page-director">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div class="sec-title">🌴 Miami Directors</div>
+      <button class="btn btn-primary btn-sm" id="addDirectorBtn" style="display:none;" onclick="openAddDirector()">+ Add Director</button>
+    </div>
+
+    <!-- Community Director -->
+    <div class="director-category" id="dcat-community">
+      <div class="director-cat-header" style="border-color:rgba(0,229,255,0.35);">
+        <span class="director-cat-title" style="color:var(--cyan);text-shadow:0 0 10px rgba(0,229,255,0.5);">Community Director</span>
+        <span class="director-cat-count" id="dcount-community">0 members</span>
+      </div>
+      <div id="dlist-community"></div>
+    </div>
+
+    <!-- Staff Director -->
+    <div class="director-category" id="dcat-staff">
+      <div class="director-cat-header" style="border-color:rgba(178,102,255,0.35);">
+        <span class="director-cat-title" style="color:#b266ff;text-shadow:0 0 10px rgba(178,102,255,0.5);">Staff Director</span>
+        <span class="director-cat-count" id="dcount-staff">0 members</span>
+      </div>
+      <div id="dlist-staff"></div>
+    </div>
+
+    <!-- Department Director -->
+    <div class="director-category" id="dcat-department">
+      <div class="director-cat-header" style="border-color:rgba(255,180,0,0.35);">
+        <span class="director-cat-title" style="color:#ffb400;text-shadow:0 0 10px rgba(255,180,0,0.5);">Department Director</span>
+        <span class="director-cat-count" id="dcount-department">0 members</span>
+      </div>
+      <div id="dlist-department"></div>
+    </div>
+
+    <!-- Gang Director -->
+    <div class="director-category" id="dcat-gang">
+      <div class="director-cat-header" style="border-color:rgba(255,60,60,0.35);">
+        <span class="director-cat-title" style="color:#ff4444;text-shadow:0 0 10px rgba(255,60,60,0.5);">Gang Director</span>
+        <span class="director-cat-count" id="dcount-gang">0 members</span>
+      </div>
+      <div id="dlist-gang"></div>
+    </div>
+
+  </div><!-- /page-director -->
+
+  <!-- ADD DIRECTOR MODAL -->
+  <div class="mgmt-modal-overlay" id="addDirectorOverlay">
+    <div class="mgmt-modal">
+      <div class="mgmt-modal-title" style="color:#ffb400;text-shadow:0 0 10px rgba(255,180,0,0.4);">🌴 Add Director</div>
+      <div class="mgmt-field">
+        <label>Name</label>
+        <input type="text" id="addDirName" placeholder="e.g. John Doe" />
+      </div>
+      <div class="mgmt-field">
+        <label>Discord ID</label>
+        <input type="text" id="addDirDiscord" placeholder="e.g. username#1234" />
+      </div>
+      <div class="mgmt-field">
+        <label>Director Role</label>
+        <select id="addDirCategory">
+          <option value="community">Community Director</option>
+          <option value="staff">Staff Director</option>
+          <option value="department">Department Director</option>
+          <option value="gang">Gang Director</option>
+        </select>
+      </div>
+      <div class="mgmt-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeAddDirector()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmAddDirector()">✓ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT DIRECTOR MODAL -->
+  <div class="mgmt-modal-overlay" id="editDirectorOverlay">
+    <div class="mgmt-modal">
+      <div class="mgmt-modal-title" style="color:#ffb400;">✏️ Edit Director</div>
+      <input type="hidden" id="editDirId" />
+      <div class="mgmt-field">
+        <label>Name</label>
+        <input type="text" id="editDirName" />
+      </div>
+      <div class="mgmt-field">
+        <label>Discord ID</label>
+        <input type="text" id="editDirDiscord" />
+      </div>
+      <div class="mgmt-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeEditDirector()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmEditDirector()">✓ Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD MEMBER MODAL -->
+  <div class="mgmt-modal-overlay" id="addMemberOverlay">
+    <div class="mgmt-modal">
+      <div class="mgmt-modal-title">➕ Add Member</div>
+      <div class="mgmt-field">
+        <label>Name</label>
+        <input type="text" id="addName" placeholder="e.g. John Doe" />
+      </div>
+      <div class="mgmt-field">
+        <label>Management Job / Title</label>
+        <input type="text" id="addRole" placeholder="e.g. Senior Manager" />
+      </div>
+      <div class="mgmt-field">
+        <label>Discord ID</label>
+        <input type="text" id="addDiscord" placeholder="e.g. username#1234" />
+      </div>
+      <div class="mgmt-field">
+        <label>Category</label>
+        <select id="addCategory">
+          <option value="senior">Senior Management</option>
+          <option value="management">Management</option>
+          <option value="junior">Junior Management</option>
+          <option value="trial">Trial Management</option>
+        </select>
+      </div>
+      <div class="mgmt-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeAddMember()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmAddMember()">✓ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT MEMBER MODAL -->
+  <div class="mgmt-modal-overlay" id="editMemberOverlay">
+    <div class="mgmt-modal">
+      <div class="mgmt-modal-title">✏️ Edit Member</div>
+      <input type="hidden" id="editId" />
+      <div class="mgmt-field">
+        <label>Name</label>
+        <input type="text" id="editName" />
+      </div>
+      <div class="mgmt-field">
+        <label>Management Job / Title</label>
+        <input type="text" id="editRole" />
+      </div>
+      <div class="mgmt-field">
+        <label>Discord ID</label>
+        <input type="text" id="editDiscord" />
+      </div>
+      <div class="mgmt-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeEditMember()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmEditMember()">✓ Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOVE MEMBER MODAL -->
+  <div class="mgmt-modal-overlay" id="moveMemberOverlay">
+    <div class="mgmt-modal">
+      <div class="mgmt-modal-title">🔀 Move to Category</div>
+      <input type="hidden" id="moveId" />
+      <button class="move-cat-btn" onclick="confirmMoveMember('senior')">
+        <span style="color:#ff4444;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;">Senior Management</span>
+        <span class="mcat-label" style="color:var(--muted)">Highest tier — leadership & oversight</span>
+      </button>
+      <button class="move-cat-btn" onclick="confirmMoveMember('management')">
+        <span style="color:#b266ff;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;">Management</span>
+        <span class="mcat-label" style="color:var(--muted)">Core management team</span>
+      </button>
+      <button class="move-cat-btn" onclick="confirmMoveMember('junior')">
+        <span style="color:var(--cyan);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;">Junior Management</span>
+        <span class="mcat-label" style="color:var(--muted)">Developing managers</span>
+      </button>
+      <button class="move-cat-btn" onclick="confirmMoveMember('trial')">
+        <span style="color:#9400d3;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;">Trial Management</span>
+        <span class="mcat-label" style="color:var(--muted)">Probationary / new additions</span>
+      </button>
+      <div class="mgmt-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeMoveMember()">Cancel</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -914,7 +1431,7 @@
     </div>
     <div id="adminMemberList" style="margin-bottom:8px;max-height:340px;overflow-y:auto;"></div>
     <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" onclick="isAdmin=false;closeModal('adminPanelOverlay')">Close</button>
+      <button class="btn btn-ghost btn-sm" onclick="isAdmin=false;updateMgmtAdminUI();closeModal('adminPanelOverlay')">Close</button>
     </div>
   </div>
 </div>
@@ -1003,6 +1520,7 @@ function openAdminLogin() {
 function checkAdmin() {
   if (document.getElementById('adminPwd').value === ADMIN_PASS) {
     isAdmin = true;
+    updateMgmtAdminUI();
     closeModal('adminLoginOverlay');
     openAdminPanel();
   } else {
@@ -1521,6 +2039,278 @@ window.addEventListener('beforeunload', () => {
   }
 });
 if (active) startTicker();
+
+function switchPage(pageId, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ===== MANAGEMENT ROSTER ===== */
+const MGMT_KEY = 'miamiMgmtRoster';
+const CATS = ['senior','management','junior','trial'];
+const CAT_LABELS = {senior:'Senior Management', management:'Management', junior:'Junior Management', trial:'Trial Management'};
+
+function loadRoster() {
+  try { return JSON.parse(localStorage.getItem(MGMT_KEY)) || []; } catch(e) { return []; }
+}
+function saveRoster(roster) {
+  localStorage.setItem(MGMT_KEY, JSON.stringify(roster));
+}
+function genId() { return 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+
+function renderRoster() {
+  const roster = loadRoster();
+  CATS.forEach(cat => {
+    const list = document.getElementById('list-' + cat);
+    const members = roster.filter(m => m.category === cat);
+    document.getElementById('count-' + cat).textContent = members.length + ' member' + (members.length !== 1 ? 's' : '');
+    if (!list) return;
+    list.innerHTML = '';
+    if (members.length === 0) {
+      list.innerHTML = '<div class="mgmt-empty">No members yet</div>';
+      return;
+    }
+    members.forEach(m => {
+      const div = document.createElement('div');
+      div.className = 'mgmt-member';
+      div.innerHTML = `
+        <div class="mgmt-info">
+          <div class="mgmt-name">${escHtml(m.name)}</div>
+          <div class="mgmt-role">${escHtml(m.role)}</div>
+          <div class="mgmt-discord">${escHtml(m.discord)}</div>
+        </div>
+        <div class="mgmt-actions" style="${isAdmin ? '' : 'display:none;'}">
+          <button class="mgmt-btn" onclick="openMoveMember('${m.id}')">⬆ Move</button>
+          <button class="mgmt-btn" onclick="openEditMember('${m.id}')">✏</button>
+          <button class="mgmt-btn del" onclick="deleteMember('${m.id}')">✕</button>
+        </div>`;
+      list.appendChild(div);
+    });
+  });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// --- Add ---
+function openAddMember() {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  document.getElementById('addName').value = '';
+  document.getElementById('addRole').value = '';
+  document.getElementById('addDiscord').value = '';
+  document.getElementById('addCategory').value = 'senior';
+  document.getElementById('addMemberOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('addName').focus(), 50);
+}
+function closeAddMember() { document.getElementById('addMemberOverlay').classList.remove('open'); }
+function confirmAddMember() {
+  const name = document.getElementById('addName').value.trim();
+  const role = document.getElementById('addRole').value.trim();
+  const discord = document.getElementById('addDiscord').value.trim();
+  const category = document.getElementById('addCategory').value;
+  if (!name || !role) { showToast('Name and role are required', 'error'); return; }
+  const roster = loadRoster();
+  roster.push({ id: genId(), name, role, discord, category });
+  saveRoster(roster);
+  renderRoster();
+  closeAddMember();
+  showToast('Member added!', 'success');
+}
+
+// --- Edit ---
+function openEditMember(id) {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  const roster = loadRoster();
+  const m = roster.find(x => x.id === id);
+  if (!m) return;
+  document.getElementById('editId').value = id;
+  document.getElementById('editName').value = m.name;
+  document.getElementById('editRole').value = m.role;
+  document.getElementById('editDiscord').value = m.discord;
+  document.getElementById('editMemberOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('editName').focus(), 50);
+}
+function closeEditMember() { document.getElementById('editMemberOverlay').classList.remove('open'); }
+function confirmEditMember() {
+  const id = document.getElementById('editId').value;
+  const name = document.getElementById('editName').value.trim();
+  const role = document.getElementById('editRole').value.trim();
+  const discord = document.getElementById('editDiscord').value.trim();
+  if (!name || !role) { showToast('Name and role are required', 'error'); return; }
+  const roster = loadRoster();
+  const idx = roster.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  roster[idx] = { ...roster[idx], name, role, discord };
+  saveRoster(roster);
+  renderRoster();
+  closeEditMember();
+  showToast('Member updated!', 'success');
+}
+
+// --- Move ---
+function openMoveMember(id) {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  document.getElementById('moveId').value = id;
+  document.getElementById('moveMemberOverlay').classList.add('open');
+}
+function closeMoveMember() { document.getElementById('moveMemberOverlay').classList.remove('open'); }
+function confirmMoveMember(cat) {
+  const id = document.getElementById('moveId').value;
+  const roster = loadRoster();
+  const idx = roster.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  roster[idx].category = cat;
+  saveRoster(roster);
+  renderRoster();
+  closeMoveMember();
+  showToast('Moved to ' + CAT_LABELS[cat], 'success');
+}
+
+// --- Delete ---
+function deleteMember(id) {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  if (!confirm('Remove this member from the roster?')) return;
+  const roster = loadRoster().filter(x => x.id !== id);
+  saveRoster(roster);
+  renderRoster();
+  showToast('Member removed', 'success');
+}
+
+// Close modals on overlay click
+['addMemberOverlay','editMemberOverlay','moveMemberOverlay'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+// Enter key support
+document.getElementById('addDiscord').addEventListener('keydown', e => { if(e.key==='Enter') confirmAddMember(); });
+document.getElementById('editDiscord').addEventListener('keydown', e => { if(e.key==='Enter') confirmEditMember(); });
+
+// Init
+function updateMgmtAdminUI() {
+  const btn = document.getElementById('addMemberBtn');
+  if (btn) btn.style.display = isAdmin ? '' : 'none';
+  const dBtn = document.getElementById('addDirectorBtn');
+  if (dBtn) dBtn.style.display = isAdmin ? '' : 'none';
+  renderRoster();
+  
+// Ensure John is Community Director
+(function() {
+  let dirs = loadDirectors();
+  const idx = dirs.findIndex(d => d.name === 'John' && d.category === 'community');
+  const johnEntry = { id: idx >= 0 ? dirs[idx].id : genId(), name: 'John', discord: '', category: 'community' };
+  if (idx >= 0) { dirs[idx] = johnEntry; } else { dirs.push(johnEntry); }
+  saveDirectors(dirs);
+})();
+renderDirectors();
+}
+renderRoster();
+
+/* ===== MIAMI DIRECTOR ===== */
+const DIR_KEY = 'miamiDirectorRoster';
+const DIR_CATS = ['community','staff','department','gang'];
+const DIR_LABELS = {community:'Community Director', staff:'Staff Director', department:'Department Director', gang:'Gang Director'};
+const DIR_COLORS = {community:'rgba(0,229,255,0.5)', staff:'rgba(178,102,255,0.5)', department:'rgba(255,180,0,0.5)', gang:'rgba(255,60,60,0.5)'};
+
+function loadDirectors() {
+  try { return JSON.parse(localStorage.getItem(DIR_KEY)) || []; } catch(e) { return []; }
+}
+function saveDirectors(dirs) { localStorage.setItem(DIR_KEY, JSON.stringify(dirs)); }
+
+function renderDirectors() {
+  const dirs = loadDirectors();
+  DIR_CATS.forEach(cat => {
+    const members = dirs.filter(d => d.category === cat);
+    const countEl = document.getElementById('dcount-' + cat);
+    const listEl = document.getElementById('dlist-' + cat);
+    if (!listEl) return;
+    if (countEl) countEl.textContent = members.length + ' member' + (members.length !== 1 ? 's' : '');
+    if (members.length === 0) {
+      listEl.innerHTML = '<div class="director-empty">No members yet</div>';
+      return;
+    }
+    listEl.innerHTML = members.map(d => {
+      const actionsHtml = isAdmin
+        ? '<div class="director-actions"><button class="mgmt-btn" onclick="openEditDirector(\'' + d.id + '\')">✏</button><button class="mgmt-btn del" onclick="deleteDirector(\'' + d.id + '\')">✕</button></div>'
+        : '';
+      return '<div class="director-row" style="border-left:3px solid ' + DIR_COLORS[cat] + ';">'
+        + '<div class="mgmt-info">'
+        + '<div class="director-row-name">' + escHtml(d.name) + '</div>'
+        + '<div class="director-row-discord">' + escHtml(d.discord) + '</div>'
+        + '</div>'
+        + actionsHtml
+        + '</div>';
+    }).join('');
+  });
+}
+
+function openAddDirector() {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  document.getElementById('addDirName').value = '';
+  document.getElementById('addDirDiscord').value = '';
+  document.getElementById('addDirCategory').value = 'community';
+  document.getElementById('addDirectorOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('addDirName').focus(), 50);
+}
+function closeAddDirector() { document.getElementById('addDirectorOverlay').classList.remove('open'); }
+function confirmAddDirector() {
+  const name = document.getElementById('addDirName').value.trim();
+  const discord = document.getElementById('addDirDiscord').value.trim();
+  const category = document.getElementById('addDirCategory').value;
+  if (!name) { showToast('Name is required', 'error'); return; }
+  const dirs = loadDirectors();
+  dirs.push({ id: genId(), name, discord, category });
+  saveDirectors(dirs);
+  renderDirectors();
+  closeAddDirector();
+  showToast('Director added!', 'success');
+}
+
+function openEditDirector(id) {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  const d = loadDirectors().find(x => x.id === id);
+  if (!d) return;
+  document.getElementById('editDirId').value = id;
+  document.getElementById('editDirName').value = d.name;
+  document.getElementById('editDirDiscord').value = d.discord;
+  document.getElementById('editDirectorOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('editDirName').focus(), 50);
+}
+function closeEditDirector() { document.getElementById('editDirectorOverlay').classList.remove('open'); }
+function confirmEditDirector() {
+  const id = document.getElementById('editDirId').value;
+  const name = document.getElementById('editDirName').value.trim();
+  const discord = document.getElementById('editDirDiscord').value.trim();
+  if (!name) { showToast('Name is required', 'error'); return; }
+  const dirs = loadDirectors();
+  const idx = dirs.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  dirs[idx] = { ...dirs[idx], name, discord };
+  saveDirectors(dirs);
+  renderDirectors();
+  closeEditDirector();
+  showToast('Updated!', 'success');
+}
+
+function deleteDirector(id) {
+  if (!isAdmin) { showToast('Admin access required', 'error'); return; }
+  if (!confirm('Remove this director?')) return;
+  saveDirectors(loadDirectors().filter(x => x.id !== id));
+  renderDirectors();
+  showToast('Removed', 'success');
+}
+
+['addDirectorOverlay','editDirectorOverlay'].forEach(oid => {
+  document.getElementById(oid).addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+renderDirectors();
 </script>
 </body>
 </html>
